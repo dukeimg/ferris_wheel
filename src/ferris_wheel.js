@@ -70,7 +70,6 @@ var wheelApp = {
   wheelBrands: [],
   initWheel: function () {
     const runWheel = () => {
-      console.log(wheelApp);
       wheelApp.wheelBrands = [].concat(wheelApp.brands, wheelApp.brands);
       while (wheelApp.wheelBrands.length < 12 + wheelApp.brands.length) {
         wheelApp.wheelBrands = wheelApp.wheelBrands.concat(wheelApp.brands);
@@ -166,11 +165,12 @@ function setBrandTitle(title, steps) {
     var width;
     setBrandTitleIsTriggered = true;
 
-    shadowBrand.html(title);
-    width = shadowBrand.width();
-    visibleBrand.html('&nbsp;').width(width);
+    shadowBrand.innerHTML = title;
+    width = shadowBrand.offsetWidth;
+    visibleBrand.innerHTML = '&nbsp;';
+    visibleBrand.style.width = width + 'px';
     setTimeout(function () {
-      visibleBrand.html(title);
+      visibleBrand.innerHTML = title;
     }, 600);
     setTimeout(function () {
       setBrandTitleIsTriggered = false;
