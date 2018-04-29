@@ -1,7 +1,7 @@
 # ferris_wheel
 A Ferris Wheel styled menu, pure VanillaJS
 
-##TODO:
+## TODO:
 - [ ] Get rid of jQuery
     - [x] Find a way to rewrite `$.when.apply()` with VanillaJS
     - [ ] Write custom `animate` function 
