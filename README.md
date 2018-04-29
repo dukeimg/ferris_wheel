@@ -7,8 +7,9 @@ A Ferris Wheel styled menu, pure VanillaJS
 - [ ] Refactor
 - [ ] Automate `BrandImage()` parser, allowing user to pass `image` parameter as string.
 - [ ] Draw circles around images with canvas
-- [ ] Use SVG arrows
 - [ ] Build dist js/css automatically
+- [ ] Generate component's html with js
+- [ ] Use SVG arrows
 - [ ] Add tests
 - [ ] Add docs demo website
 - [ ] Pack lib for package managers
