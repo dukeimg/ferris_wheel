@@ -3,8 +3,14 @@ var inside = false;
 var wheelIsSpinnig = true;
 var lastSteps = 2;
 
+const getById = (id) => {
+  return document.getElementById(id)
+};
+
+const canvas = getById('canvas');
+
 function adjust() {
-  screenSize = $(window).width();
+  screenSize = window.innerWidth;
 
   if (screenSize >= 950) {
     containerScale = 1;
@@ -52,52 +58,54 @@ function adjust() {
     });
   }
 
-  $('#canvas').prop('height', y);
+  canvas.style.height = y;
 }
 
 adjust();
 
-$(window).resize(function () {
-  adjust()
-});
+window.addEventListener('resize', adjust);
 
 var wheelApp = {
-  preload: [],
   brands: [],
   wheelBrands: [],
-  brandImage: function(src) {
-    var image = new Image(125, 125);
-    this.preload.push(src);
-    image.src = src;
-    return image;
-  },
   initWheel: function () {
-    var promises = [];
-    for (var i = 0; i < this.preload.length; i++) {
-      (function(url, promise) {
-        var img = new Image();
-        img.onload = function() {
-          promise.resolve();
-        };
-        img.src = url;
-      })(this.preload[i], promises[i] = $.Deferred());
-    }
-    $.when.apply($, promises).done(function() {
+    const runWheel = () => {
+      console.log(wheelApp);
       wheelApp.wheelBrands = [].concat(wheelApp.brands, wheelApp.brands);
       while (wheelApp.wheelBrands.length < 12 + wheelApp.brands.length) {
         wheelApp.wheelBrands = wheelApp.wheelBrands.concat(wheelApp.brands);
       }
 
-      $('.loading').hide();
-      $('canvas').fadeIn();
-      $('.jumbotron .selector').addClass('active');
+      document.getElementsByClassName('loading')[0].style.display = 'none';
+      getById('canvas').style.display = 'block';
+      document.getElementsByClassName('jumbotron')[0].getElementsByClassName('selector')[0].classList.add('active');
       animate('forward', 2);
       setTimeout(function () {
         wheelIsSpinnig = false;
       }, 1200)
+    };
+
+    const imageCount = this.brands.length;
+    let imagesLoaded = 0;
+
+    const preloadImage = src => {
+      let image = new Image(125, 125);
+      image.src = src;
+      return image;
+    };
+
+    this.brands = this.brands.map((brand) => {
+      brand.image = preloadImage(brand.image);
+      brand.image.onload = function () {
+        imagesLoaded++;
+        if (imagesLoaded === imageCount) {
+          runWheel();
+        }
+      };
+      return brand;
     });
 
-    $('#visible-brand').on('click', function (e) {
+    getById('visible-brand').addEventListener('click', function (e) {
       e.preventDefault();
 
       var url = wheelApp.currentBrand.url;
@@ -110,7 +118,6 @@ var wheelApp = {
 var shift = 0; // Defines wheel rotation shift
 
 // Init canvas
-var canvas = document.getElementById('canvas');
 ctx = canvas.getContext('2d');
 
 // Define animation rotator
@@ -152,8 +159,8 @@ function rotate(x, y, xm, ym, a) {
 }
 
 var setBrandTitleIsTriggered = false;
-var shadowBrand = $('#shadow-brand');
-var visibleBrand = $('#visible-brand');
+var shadowBrand = getById('shadow-brand');
+var visibleBrand = getById('visible-brand');
 function setBrandTitle(title, steps) {
   if (!setBrandTitleIsTriggered) {
     var width;
@@ -373,15 +380,7 @@ function animate(direction, steps) {
   }, 'linear');
 }
 
-$('.choice-header').click(function () {
-  var elem = $(this).parents().eq(1).find('.choice');
-  var i = $(this).hasClass('selected') ? 0 : 1;
-  var n = elem.index($(this).parent());
-  elem.removeClass('selected');
-  elem.slice(0, n + i).addClass('selected');
-});
-
-$('.arrow-right').click(function (e) {
+document.getElementsByClassName('arrow-right')[0].addEventListener('click', function (e) {
   e.preventDefault();
   if(!wheelIsSpinnig && !inside) {
     wheelIsSpinnig = true;
@@ -393,7 +392,7 @@ $('.arrow-right').click(function (e) {
   }
 });
 
-$('.arrow-left').click(function (e) {
+document.getElementsByClassName('arrow-left')[0].addEventListener('click', function (e) {
   e.preventDefault();
   if(!wheelIsSpinnig && !inside) {
     wheelIsSpinnig = true;
