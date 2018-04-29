@@ -10,4 +10,9 @@ A Ferris Wheel styled menu, pure VanillaJS
 - [ ] Use SVG arrows
 - [ ] Build dist js/css automatically
 - [ ] Add tests
+- [ ] Add docs demo website
+- [ ] Pack lib for package managers
+    - [ ] npm
+    - [ ] yarn
+    - [ ] bower
 - [ ] Add color parameter
