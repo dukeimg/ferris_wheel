@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <link rel="stylesheet" href="../src/spinkit.css">
+    <link rel="stylesheet" href="../src/style.css">
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <section class="jumbotron">
+        <h1>Ferris Wheel Test</h1>
+        <div class="selector">
+            <a href="#" class="arrow arrow-left"></a>
+            <div id="brands-list">
+                <span id="visible-brand">Банкетный зал</span>
+                <span id="shadow-brand" style="display: none">Банкетный зал</span>
+            </div>
+            <a href="#" class="arrow arrow-right"></a>
+        </div>
+        <div class="loading">
+            <div class="sk-folding-cube">
+                <div class="sk-cube1 sk-cube"></div>
+                <div class="sk-cube2 sk-cube"></div>
+                <div class="sk-cube4 sk-cube"></div>
+                <div class="sk-cube3 sk-cube"></div>
+            </div>
+        </div>
+        <canvas id="canvas" width="950" class="wheel" height="475"></canvas>
+    </section>
+    <script src="../src/ferris_wheel.js"></script>
+    <script>
+      wheelApp.brands.push({
+        name: 'Example',
+        image: wheelApp.brandImage('../example/instagram.png'),
+        url: "#",
+        newPage: false
+      });
+      wheelApp.initWheel();
+    </script>
+</body>
+</html>
