@@ -4,7 +4,7 @@ A Ferris Wheel styled menu, pure VanillaJS
 ## TODO:
 - [ ] Get rid of jQuery
     - [x] Find a way to rewrite `$.when.apply()` with VanillaJS
-    - [ ] Write custom `animate` function 
+    - [x] Write custom `animate` function 
 - [ ] Refactor
 - [ ] Automate `BrandImage()` parser, allowing user to pass `image` parameter as string.
 - [ ] Draw circles around images with canvas

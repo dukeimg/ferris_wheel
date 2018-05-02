@@ -362,10 +362,28 @@ function animate(direction, steps) {
     shift = wheelApp.brands.length + shift;
   }
 
-  $({ n: 0 }).animate({ n: val }, {
+  // $({ n: 0 }).animate({ n: val }, {
+  //   duration: duration,
+  //   step: function(now, fx) {
+  //     var progress = now / val;
+  //     if (direction === 'forward') {
+  //       rotator = now;
+  //     } else if (direction === 'backward') {
+  //       rotator = -(now);
+  //     } else {
+  //       // Nothing
+  //     }
+  //     window.requestAnimationFrame(function () {
+  //       drawFrame(steps, progress);
+  //     });
+  //   }
+  // }, 'linear');
+  anim8({
+    startValue: 0,
+    endValue: val,
     duration: duration,
-    step: function(now, fx) {
-      var progress = now / val;
+    step: (now) => {
+      let progress = now / val;
       if (direction === 'forward') {
         rotator = now;
       } else if (direction === 'backward') {
@@ -377,7 +395,7 @@ function animate(direction, steps) {
         drawFrame(steps, progress);
       });
     }
-  }, 'linear');
+  })
 }
 
 document.getElementsByClassName('arrow-right')[0].addEventListener('click', function (e) {
