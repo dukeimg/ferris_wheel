@@ -70,7 +70,7 @@ var wheelApp = {
   wheelBrands: [],
   initWheel: function () {
     const runWheel = () => {
-      wheelApp.wheelBrands = [].concat(wheelApp.brands, wheelApp.brands);
+      wheelApp.wheelBrands = [];
       while (wheelApp.wheelBrands.length < 12 + wheelApp.brands.length) {
         wheelApp.wheelBrands = wheelApp.wheelBrands.concat(wheelApp.brands);
       }
@@ -336,9 +336,8 @@ function animate(direction, steps) {
   var val = 30 * steps;
   var duration = 600 * steps;
 
-
   if (dir == 'f' && direction == 'forward' || dir == null) {
-    shift -= steps;
+    shift = 0
   } else if (dir == 'b' && direction == 'forward') {
     shift = shift - (steps - prevSteps);
   }
