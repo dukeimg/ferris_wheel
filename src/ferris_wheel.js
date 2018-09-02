@@ -1,6 +1,6 @@
 let ctx, dir, screenSize, containerScale, zones, x, y;
 let inside = false;
-let wheelIsSpinnig = true;
+let wheelIsSpinning = true;
 let lastSteps = 2;
 
 const getById = (id) => {
@@ -52,7 +52,7 @@ function adjust() {
   x = 475 * containerScale;
   y = 475 * containerScale;
 
-  if (!wheelIsSpinnig) {
+  if (!wheelIsSpinning) {
     window.requestAnimationFrame(function () {
       drawFrame(lastSteps, 1);
     });
@@ -80,7 +80,7 @@ let wheelApp = {
       document.getElementsByClassName('jumbotron')[0].getElementsByClassName('selector')[0].classList.add('active');
       animate('forward', 2);
       setTimeout(function () {
-        wheelIsSpinnig = false;
+        wheelIsSpinning = false;
       }, 1200)
     };
 
@@ -371,24 +371,24 @@ function animate(direction, steps) {
 
 document.getElementsByClassName('arrow-right')[0].addEventListener('click', function (e) {
   e.preventDefault();
-  if(!wheelIsSpinnig && !inside) {
-    wheelIsSpinnig = true;
+  if(!wheelIsSpinning && !inside) {
+    wheelIsSpinning = true;
     lastSteps = 1;
     animate('forward', 1);
     setTimeout(function () {
-      wheelIsSpinnig = false;
+      wheelIsSpinning = false;
     }, 600);
   }
 });
 
 document.getElementsByClassName('arrow-left')[0].addEventListener('click', function (e) {
   e.preventDefault();
-  if(!wheelIsSpinnig && !inside) {
-    wheelIsSpinnig = true;
+  if(!wheelIsSpinning && !inside) {
+    wheelIsSpinning = true;
     lastSteps = 1;
     animate('backward', 1);
     setTimeout(function () {
-      wheelIsSpinnig = false;
+      wheelIsSpinning = false;
     }, 600);
   }
 });
@@ -404,7 +404,7 @@ function getMousePos(canvas, evt) {
 canvas.addEventListener('click', function(evt) {
   let mousePos = getMousePos(canvas, evt);
   for (let c = 0; c < 7; c++) {
-    if (Math.sqrt((zones[c].x - mousePos.x) * (zones[c].x - mousePos.x) + (zones[c].y - mousePos.y) * (zones[c].y - mousePos.y)) < 84 && !inside && !wheelIsSpinnig) {
+    if (Math.sqrt((zones[c].x - mousePos.x) * (zones[c].x - mousePos.x) + (zones[c].y - mousePos.y) * (zones[c].y - mousePos.y)) < 84 && !inside && !wheelIsSpinning) {
       inside = true;
       let z = -3 + c;
 
