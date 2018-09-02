@@ -19,3 +19,4 @@ A Ferris Wheel styled menu, pure VanillaJS
     - [ ] bower
 - [ ] Add color parameter
 - [ ] Add usage instruction to `README.md`
+- [ ] Create a React component
