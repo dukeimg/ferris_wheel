@@ -1,7 +1,7 @@
-var ctx, direction, dir, screenSize, containerScale, zones, x, y;
-var inside = false;
-var wheelIsSpinnig = true;
-var lastSteps = 2;
+let ctx, dir, screenSize, containerScale, zones, x, y;
+let inside = false;
+let wheelIsSpinnig = true;
+let lastSteps = 2;
 
 const getById = (id) => {
   return document.getElementById(id)
@@ -65,7 +65,7 @@ adjust();
 
 window.addEventListener('resize', adjust);
 
-var wheelApp = {
+let wheelApp = {
   brands: [],
   wheelBrands: [],
   initWheel: function () {
@@ -107,14 +107,14 @@ var wheelApp = {
     getById('visible-brand').addEventListener('click', function (e) {
       e.preventDefault();
 
-      var url = wheelApp.currentBrand.url;
-      var target = wheelApp.currentBrand.newPage === 'True' ? '_blank' : '_self';
+      let url = wheelApp.currentBrand.url;
+      let target = wheelApp.currentBrand.newPage ? '_blank' : '_self';
       window.open(url, target);
     })
   }
 };
 
-var shift = 0; // Defines wheel rotation shift
+let shift = 0; // Defines wheel rotation shift
 
 // Init canvas
 ctx = canvas.getContext('2d');
@@ -122,11 +122,11 @@ ctx = canvas.getContext('2d');
 // Define animation rotator
 // Rotator in a multiplier used to rotate canvas for animation spinning.
 
-var rotator = 0;
+let rotator = 0;
 
 // Define functions
 
-var clearCircle = function(x, y, radius) {
+let clearCircle = function(x, y, radius) {
   ctx.beginPath();
   ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
   ctx.clip();
@@ -145,24 +145,12 @@ function drawLine(ctx, startPoint, endPoint) {
   ctx.lineTo(endPoint.x, endPoint.y);
 }
 
-function rotate(x, y, xm, ym, a) {
-  var cos = Math.cos;
-  var sin = Math.sin;
-
-  a = a * Math.PI / 180;
-
-  var xr = (x - xm) * cos(a) - (y - ym) * sin(a)   + xm;
-  var yr = (x - xm) * sin(a) + (y - ym) * cos(a)   + ym;
-
-  return [xr, yr];
-}
-
-var setBrandTitleIsTriggered = false;
-var shadowBrand = getById('shadow-brand');
-var visibleBrand = getById('visible-brand');
+let setBrandTitleIsTriggered = false;
+let shadowBrand = getById('shadow-brand');
+let visibleBrand = getById('visible-brand');
 function setBrandTitle(title, steps) {
   if (!setBrandTitleIsTriggered) {
-    var width;
+    let width;
     setBrandTitleIsTriggered = true;
 
     shadowBrand.innerHTML = title;
@@ -187,11 +175,11 @@ function drawFrame(steps, progress) {
   ctx.rotate((Math.PI / 180) * rotator);
   ctx.translate(-x, -y);
 
-  var angle =  Math.PI / 180 * (-rotator - 90);
-  var x2 = x + Math.cos(angle) * x;
-  var y2 = y + Math.sin(angle) * y;
+  let angle =  Math.PI / 180 * (-rotator - 90);
+  let x2 = x + Math.cos(angle) * x;
+  let y2 = y + Math.sin(angle) * y;
 
-  var gradient = ctx.createLinearGradient(x, y, x2, y2);
+  let gradient = ctx.createLinearGradient(x, y, x2, y2);
   gradient.addColorStop(0, '#bec7cf');
   gradient.addColorStop(1, 'white');
   ctx.fillStyle = 'transparent';
@@ -199,33 +187,33 @@ function drawFrame(steps, progress) {
   ctx.lineWidth = 10 * containerScale;
 
   // Draw wheel elements
-  var startAngle = 0;
-  var endAngle = 360;
-  var anticlockwise = false;
+  let startAngle = 0;
+  let endAngle = 360;
+  let anticlockwise = false;
 
-  var circles = [395 * containerScale, 430 * containerScale];
+  let circles = [395 * containerScale, 430 * containerScale];
 
-  for (var i = 0; i < circles.length; i++) {
+  for (let i = 0; i < circles.length; i++) {
     drawCircle(x, y, circles[i], startAngle, endAngle, anticlockwise);
   }
 
   // Draw lines
   ctx.save();
 
-  for (var i = 0; i < 6; i++) {
-    var startPoint = {
+  for (let i = 0; i < 6; i++) {
+    let startPoint = {
       x: 457.5 * containerScale,
       y: 80 * containerScale
     };
-    var endPoint = {
+    let endPoint = {
       x: 457.5 * containerScale,
       y: 870 * containerScale
     };
-    var startPoint2 = {
+    let startPoint2 = {
       x: 492.5 * containerScale,
       y: 80 * containerScale
     };
-    var endPoint2 = {
+    let endPoint2 = {
       x: 492.5 * containerScale,
       y: 870 * containerScale
     };
@@ -244,10 +232,10 @@ function drawFrame(steps, progress) {
   ctx.globalCompositeOperation = 'destination-out';
   ctx.fillStyle = '#fff';
 
-  var x3, y3; // coords of brand images
-  var wheelOffset = 120; // wheel offset in degrees
+  let x3, y3; // coords of brand images
+  let wheelOffset = 120; // wheel offset in degrees
 
-  if (dir == 'b') {
+  if (dir === 'b') {
     wheelOffset = 30 * 3;
   } else {
     wheelOffset = 30 * (3 + steps);
@@ -257,8 +245,8 @@ function drawFrame(steps, progress) {
   ctx.rotate((Math.PI / 180) * -wheelOffset);
   ctx.translate(-x, -y);
 
-  var range, title;
-  if (dir == 'b') {
+  let range, title;
+  if (dir === 'b') {
     if (shift + 7 + steps > wheelApp.wheelBrands.length) {
       shift -= wheelApp.wheelBrands.length - 7 - steps;
     }
@@ -274,11 +262,11 @@ function drawFrame(steps, progress) {
   setBrandTitle(title, steps);
 
 
-  for (var t = 0; t < 7 + steps; t++) {
+  for (let t = 0; t < 7 + steps; t++) {
     ctx.globalCompositeOperation = 'destination-out';
     ctx.fillStyle = '#fff';
 
-    var angle3 =  Math.PI / 180 * (rotator - wheelOffset + (30 * t));
+    let angle3 =  Math.PI / 180 * (rotator - wheelOffset + (30 * t));
     x3 = x;
     y3 = (85 + 5 * Math.cos(angle3)) * containerScale;
 
@@ -291,8 +279,8 @@ function drawFrame(steps, progress) {
     ctx.translate(x3,  y3);
     ctx.rotate(-angle3);
 
-    var a, b;
-    if (dir == 'b') {
+    let a, b;
+    if (dir === 'b') {
       a = 3 + steps;
       b = 3;
     } else {
@@ -300,9 +288,9 @@ function drawFrame(steps, progress) {
       b = 3 + steps;
     }
 
-    if (t == a) {
+    if (t === a) {
       ctx.globalAlpha = 0.6 + 0.4 * progress;
-    } else if (t == b) {
+    } else if (t === b) {
       ctx.globalAlpha = 1 - 0.4 * progress;
     } else {
       ctx.globalAlpha = 0.6;
@@ -328,24 +316,24 @@ function drawFrame(steps, progress) {
   clearCircle(x, y, 70 * containerScale);
 }
 
-var prevSteps = 0;
+let prevSteps = 0;
 function animate(direction, steps) {
-  if (steps == 0) {return;}
-  steps == null ? steps = 1 : null;
+  if (steps === 0) {return;}
+  steps === null ? steps = 1 : null;
 
-  var val = 30 * steps;
-  var duration = 600 * steps;
+  let val = 30 * steps;
+  let duration = 600 * steps;
 
-  if (dir == 'f' && direction == 'forward' || dir == null) {
+  if (dir === 'f' && direction === 'forward' || dir === null) {
     shift = 0
-  } else if (dir == 'b' && direction == 'forward') {
+  } else if (dir === 'b' && direction === 'forward') {
     shift = shift - (steps - prevSteps);
   }
 
-  if (dir == 'b' && direction == 'backward') {
+  if (dir === 'b' && direction === 'backward') {
     shift += steps;
     shift = shift - (steps - prevSteps);
-  } else if (dir == null) {
+  } else if (dir === null) {
     shift = 0;
   }
 
@@ -406,28 +394,26 @@ document.getElementsByClassName('arrow-left')[0].addEventListener('click', funct
 });
 
 function getMousePos(canvas, evt) {
-  var rect = canvas.getBoundingClientRect();
+  let rect = canvas.getBoundingClientRect();
   return {
     x: evt.clientX - rect.left,
     y: evt.clientY - rect.top
   };
 }
 
-var context = canvas.getContext('2d');
-
 canvas.addEventListener('click', function(evt) {
-  var mousePos = getMousePos(canvas, evt);
-  for (var c = 0; c < 7; c++) {
+  let mousePos = getMousePos(canvas, evt);
+  for (let c = 0; c < 7; c++) {
     if (Math.sqrt((zones[c].x - mousePos.x) * (zones[c].x - mousePos.x) + (zones[c].y - mousePos.y) * (zones[c].y - mousePos.y)) < 84 && !inside && !wheelIsSpinnig) {
       inside = true;
-      var z = -3 + c;
+      let z = -3 + c;
 
       if (z > 0) {
         lastSteps = z;
         animate('backward', z);
       } else if (z === 0) {
-        var url = wheelApp.currentBrand.url;
-        var target = wheelApp.currentBrand.newPage === 'True' ? '_blank' : '_self';
+        let url = wheelApp.currentBrand.url;
+        let target = wheelApp.currentBrand.newPage ? '_blank' : '_self';
         window.open(url, target);
       } else {
         lastSteps = Math.abs(z);
@@ -444,8 +430,8 @@ canvas.addEventListener('click', function(evt) {
 }, false);
 
 canvas.addEventListener('mousemove', function (evt) {
-  var mousePos = getMousePos(canvas, evt);
-  for (var c = 0; c < 7; c++) {
+  let mousePos = getMousePos(canvas, evt);
+  for (let c = 0; c < 7; c++) {
     if (Math.sqrt((zones[c].x - mousePos.x) * (zones[c].x - mousePos.x) + (zones[c].y - mousePos.y) * (zones[c].y - mousePos.y)) < 84) {
       canvas.style.cursor = "pointer";
       return
